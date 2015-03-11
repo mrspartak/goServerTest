@@ -25,7 +25,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", handler)
-	err := http.ListenAndServe(":9000", nil)
+	err := http.ListenAndServe(":8000", nil)
 
 	if err != nil {
 		log.Println(err)
