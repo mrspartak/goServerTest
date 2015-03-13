@@ -4,8 +4,10 @@ import "github.com/go-martini/martini"
 
 func main() {
 	m := martini.Classic()
-	m.Get("/", func() string {
+
+	m.Get("/checkme", func() string {
 		return "Hello world!"
 	})
-	m.Run()
+
+	m.RunOnAddr(":8000")
 }
