@@ -1,19 +1,17 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"net/http"
+	"github.com/plimble/ace"
 )
 
 func main() {
-	router := gin.Default()
-	router.GET("/go/:name", func(c *gin.Context) {
+	a := ace.Default()
+	a.GET("/go", func(c *ace.C) {
+		c.String(200, "Hello")
+	})
+	a.GET("/go/:name", func(c *ace.C) {
 		name := c.Params.ByName("name")
-		message := "Hello " + name
-		c.String(http.StatusOK, message)
+		c.String(200, "Hello"+name)
 	})
-	router.GET("/go", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong")
-	})
-	router.Run(":8000")
+	a.Run(":8000")
 }
