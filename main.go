@@ -1,24 +1,22 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
+	"fmt"
 	"net/http"
+
+	"github.com/zenazn/goji"
+	"github.com/zenazn/goji/web"
 )
 
+func hello(c web.C, w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello, %s!", c.URLParams["name"])
+}
+func hello2(c web.C, w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello!")
+}
+
 func main() {
-	rtr := mux.NewRouter()
-	rtr.HandleFunc("/go/{name:[a-z0-9]+}", profile).Methods("GET")
-	rtr.HandleFunc("/go", profile2).Methods("GET")
-
-	http.Handle("/", rtr)
-	http.ListenAndServe(":8000", nil)
-}
-
-func profile(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
-	name := params["name"]
-	w.Write([]byte("Hello " + name))
-}
-func profile2(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Hello"))
+	goji.Get("/go", hello2)
+	goji.Get("/go/:name", hello)
+	goji.Serve()
 }
