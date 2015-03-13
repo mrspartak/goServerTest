@@ -11,6 +11,7 @@ func (this *MainController) Get() {
 }
 
 func main() {
+	beego.HttpPort = 8000
 	beego.Router("/go", &MainController{})
 	beego.Run()
 }
