@@ -1,17 +1,17 @@
 package main
 
-import "github.com/astaxie/beego"
-
-type MainController struct {
-	beego.Controller
-}
-
-func (this *MainController) Get() {
-	this.Ctx.WriteString("hello world")
-}
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
 
 func main() {
-	beego.HttpPort = 8000
-	beego.Router("/go", &MainController{})
-	beego.Run()
+	router := gin.Default()
+	router.GET("/", func(c *gin.Context) {
+		c.String(http.StatusOK, "hello world")
+	})
+	router.GET("/go", func(c *gin.Context) {
+		c.String(http.StatusOK, "pong")
+	})
+	router.Run(":8000")
 }
