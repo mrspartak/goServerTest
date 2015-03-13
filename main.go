@@ -1,22 +1,19 @@
 package main
 
 import (
-	"fmt"
+	"github.com/gin-gonic/gin"
 	"net/http"
-
-	"github.com/zenazn/goji"
-	"github.com/zenazn/goji/web"
 )
 
-func hello(c web.C, w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, %s!", c.URLParams["name"])
-}
-func hello2(c web.C, w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello!")
-}
-
 func main() {
-	goji.Get("/go", hello2)
-	goji.Get("/go/:name", hello)
-	goji.Serve()
+	router := gin.Default()
+	router.GET("/go/:name", func(c *gin.Context) {
+		name := c.Params.ByName("name")
+		message := "Hello " + name
+		c.String(http.StatusOK, message)
+	})
+	router.GET("/go", func(c *gin.Context) {
+		c.String(http.StatusOK, "pong")
+	})
+	router.Run(":8000")
 }
