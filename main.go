@@ -9,5 +9,9 @@ func main() {
 		return "Hello world!"
 	})
 
+	m.Get("/go", func() string {
+		return "Hello world!"
+	})
+
 	m.RunOnAddr(":8000")
 }
