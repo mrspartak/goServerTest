@@ -1,17 +1,16 @@
 package main
 
-import "github.com/go-martini/martini"
+import "github.com/astaxie/beego"
+
+type MainController struct {
+	beego.Controller
+}
+
+func (this *MainController) Get() {
+	this.Ctx.WriteString("hello world")
+}
 
 func main() {
-	m := martini.Classic()
-
-	m.Get("/", func() string {
-		return "Hello world!"
-	})
-
-	m.Get("/go", func() string {
-		return "Hello world!"
-	})
-
-	m.RunOnAddr(":8000")
+	beego.Router("/go", &MainController{})
+	beego.Run()
 }
